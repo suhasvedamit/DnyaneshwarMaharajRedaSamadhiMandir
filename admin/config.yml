@@ -1,0 +1,285 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# GitHub: set repo to your fork if different. For OAuth on GitHub Pages, see docs/SVELTIA-CMS.md
+backend:
+  name: github
+  repo: suhasvedamit/DnyaneshwarMaharajRedaSamadhiMandir_SourceCode
+  branch: main
+  # GitHub Pages cannot run OAuth; deploy tools/cms-github-oauth-php and set your HTTPS origin:
+  base_url: https://srsm-sveltia-cms-auth.suhas-3fe.workers.dev/
+
+site_url: https://suhasvedamit.github.io/DnyaneshwarMaharajRedaSamadhiMandir/
+
+media_folder: public/uploads
+public_folder: /uploads
+
+locale: mr
+
+collections:
+  - name: news
+    label: News
+    label_singular: News post
+    icon: newspaper
+    folder: src/content/news
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    fields:
+      - name: title
+        label: Title
+        widget: object
+        collapsed: true
+        fields:
+          - { name: mr, label: Marathi, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: excerpt
+        label: Excerpt
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: mr, label: Marathi, widget: text }
+          - { name: en, label: English, widget: text }
+      - { name: date, label: Date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { name: draft, label: Draft (hide from website), widget: boolean, default: false }
+      - {
+          name: showOnHome,
+          label: Show on home page (latest row),
+          widget: boolean,
+          default: true,
+          hint: 'Turn off to keep the post on the News page only (still public when not draft).',
+        }
+      - name: coverImage
+        label: Cover image
+        widget: image
+        required: false
+        choose_url: true
+        hint: Upload or pick from Media; optional URL tab for an existing /uploads/… path.
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+        field:
+          label: Tag
+          widget: string
+      - { name: body, label: Body, widget: markdown }
+
+  - name: galleries
+    label: Galleries
+    label_singular: Gallery
+    icon: gallery_thumbnail
+    folder: src/content/galleries
+    create: true
+    slug: '{{slug}}'
+    extension: json
+    format: json
+    fields:
+      - name: title
+        label: Title
+        widget: object
+        collapsed: true
+        fields:
+          - { name: mr, label: Marathi, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: description
+        label: Description
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: mr, label: Marathi, widget: text }
+          - { name: en, label: English, widget: text }
+      - name: coverImage
+        label: Cover image
+        widget: image
+        required: false
+        choose_url: true
+      - name: items
+        label: Items
+        widget: list
+        summary: '{{fields.type}} — {{fields.src}}'
+        fields:
+          - name: type
+            label: Type
+            widget: select
+            options: [image, video]
+          - name: src
+            label: Image (upload) or video URL
+            widget: file
+            required: false
+            choose_url: true
+            hint: For type image, upload or choose a file. For type video, use the URL tab with a YouTube link.
+          - name: alt
+            label: Alt text
+            widget: object
+            required: false
+            collapsed: true
+            fields:
+              - { name: mr, label: Marathi, widget: string }
+              - { name: en, label: English, widget: string }
+          - { name: youtubeId, label: YouTube ID (for video), widget: string, required: false }
+
+  - name: site_data
+    label: Site data
+    icon: database
+    files:
+      - name: festivals
+        label: Festivals
+        file: src/content/festivals/festivals.json
+        fields:
+          - name: festivals
+            label: Festivals
+            widget: list
+            summary: '{{fields.slug}}'
+            fields:
+              - { name: slug, label: Slug, widget: string }
+              - { name: order, label: Order, widget: number, value_type: int }
+              - name: image
+                label: Poster image
+                widget: image
+                required: false
+                choose_url: true
+              - { name: youtubeVideoId, label: YouTube video ID, widget: string, required: false }
+              - name: title
+                label: Title
+                widget: object
+                collapsed: true
+                fields:
+                  - { name: mr, label: Marathi, widget: string }
+                  - { name: en, label: English, widget: string }
+              - name: excerpt
+                label: Excerpt
+                widget: object
+                collapsed: true
+                fields:
+                  - { name: mr, label: Marathi, widget: text }
+                  - { name: en, label: English, widget: text }
+              - name: paragraphs
+                label: Paragraphs
+                widget: object
+                collapsed: true
+                fields:
+                  - name: mr
+                    label: Marathi paragraphs
+                    widget: list
+                    field: { label: Paragraph, widget: text }
+                  - name: en
+                    label: English paragraphs
+                    widget: list
+                    field: { label: Paragraph, widget: text }
+
+      - name: darshan_schedule
+        label: Darshan schedule
+        file: src/content/darshan/schedule.json
+        fields:
+          - name: notes
+            label: Notes
+            widget: object
+            collapsed: true
+            fields:
+              - { name: mr, label: Marathi, widget: text }
+              - { name: en, label: English, widget: text }
+          - name: slots
+            label: Time slots
+            widget: list
+            summary: '{{fields.label.mr}}'
+            fields:
+              - name: label
+                label: Label
+                widget: object
+                collapsed: true
+                fields:
+                  - { name: mr, label: Marathi, widget: string }
+                  - { name: en, label: English, widget: string }
+              - name: time
+                label: Time
+                widget: object
+                collapsed: true
+                fields:
+                  - { name: mr, label: Marathi, widget: string }
+                  - { name: en, label: English, widget: string }
+
+      - name: trustees
+        label: Trustees
+        file: src/content/trustees/trustees.json
+        fields:
+          - name: trustees
+            label: Trustees
+            widget: list
+            summary: '{{fields.name-en}} — {{fields.role}}'
+            fields:
+              - { name: name-en, label: Name (English), widget: string }
+              - { name: name-mr, label: Name (Marathi), widget: string }
+              - name: role
+                label: Role (key)
+                widget: select
+                options:
+                  - Chairman
+                  - Vice Chairman
+                  - Secretary
+                  - Treasurer
+                  - Trustee
+                hint: Labels on the site come from i18n; this value must match the key.
+              - name: image
+                label: Photo
+                widget: image
+                required: true
+                choose_url: true
+                hint: Upload saves under public/uploads (e.g. trustees/). URL tab if the file already exists in the repo.
+
+      - name: premises_showcase
+        label: Premises showcase
+        file: src/content/premises/showcase.json
+        fields:
+          - name: items
+            label: Items (order = display order)
+            widget: list
+            summary: '{{fields.id}}'
+            fields:
+              - name: id
+                label: Section ID (do not rename without updating i18n)
+                widget: select
+                options:
+                  - development
+                  - mahadwar
+                  - barav
+                  - vinamandapEast
+                  - vinamandapNorthSouth
+                  - vinamandapSoutheast
+                  - lighting
+                  - interior
+                  - garden
+              - name: image
+                label: Photo
+                widget: image
+                required: true
+                choose_url: true
+
+      - name: social_links
+        label: Social links
+        file: src/content/site/social.json
+        fields:
+          - { name: facebook, label: Facebook URL, widget: string }
+          - { name: instagram, label: Instagram URL, widget: string }
+          - { name: youtube, label: YouTube URL, widget: string }
+
+      - name: history_mr
+        label: History narrative (Marathi)
+        file: src/content/history/narrative-mr.json
+        fields:
+          - { name: openingVerses, label: Opening verses, widget: text }
+          - name: paragraphs
+            label: Paragraphs
+            widget: list
+            field: { label: Paragraph, widget: text }
+
+      - name: history_en
+        label: History narrative (English)
+        file: src/content/history/narrative-en.json
+        fields:
+          - { name: openingVerses, label: Opening verses, widget: text }
+          - name: paragraphs
+            label: Paragraphs
+            widget: list
+            field: { label: Paragraph, widget: text }

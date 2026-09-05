@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Ozar placeholder">
+  <defs>
+    <linearGradient id="ozar1" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4a1f28"/>
+      <stop offset="100%" stop-color="#c9a66b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#ozar1)"/>
+  <text x="600" y="410" text-anchor="middle" fill="#faf6ef" font-family="Georgia,serif" font-size="52">Ozar</text>
+  <text x="600" y="470" text-anchor="middle" fill="#faf6efcc" font-family="system-ui,sans-serif" font-size="22">Placeholder — replace with photo</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Lenyadri placeholder 2">
+  <defs>
+    <linearGradient id="lenyadri2" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d2430"/>
+      <stop offset="100%" stop-color="#a67c52"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#lenyadri2)"/>
+  <text x="600" y="410" text-anchor="middle" fill="#faf6ef" font-family="Georgia,serif" font-size="48">Girijatmaj</text>
+</svg>

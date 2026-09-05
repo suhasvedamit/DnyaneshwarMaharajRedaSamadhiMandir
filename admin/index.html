@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Content — Sveltia CMS</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@sveltia/cms@0.156.1/dist/sveltia-cms.js"></script>
+    <script>
+      (function () {
+        function register() {
+          if (typeof CMS !== 'undefined' && typeof CMS.registerPreviewStyle === 'function') {
+            CMS.registerPreviewStyle('preview.css');
+            return true;
+          }
+          return false;
+        }
+        if (!register()) {
+          var tries = 0;
+          var id = setInterval(function () {
+            tries += 1;
+            if (register() || tries > 80) clearInterval(id);
+          }, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>
